@@ -45,3 +45,18 @@ Answers using the stored review summary and finding context.
   "comment": "Useful finding"
 }
 ```
+
+## Repository Metrics
+
+`GET /reports/repositories/metrics?repository=owner/repo`
+
+Returns aggregated review statistics for a repository, including total reviews,
+finding counts, severity counts, category confidence, agent confidence, and the
+highest-risk review IDs.
+
+## Review Export
+
+`GET /reports/reviews/{review_id}/export`
+
+Returns a compact, shareable export payload for one review with the summary,
+prioritized actions, pull request URL, and flattened finding details.
