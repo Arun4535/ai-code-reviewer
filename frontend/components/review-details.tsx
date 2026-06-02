@@ -96,7 +96,7 @@ export function ReviewDetails({ reviewId }: { reviewId: number }) {
               ))}
             </div>
             <div className="mt-3 flex gap-2">
-              <input value={question} onChange={(event) => setQuestion(event.target.value)} placeholder="Ask about a finding" className="min-w-0 flex-1 rounded-md border border-line px-3 py-2 text-sm outline-none focus:border-brand" />
+              <input suppressHydrationWarning value={question} onChange={(event) => setQuestion(event.target.value)} placeholder="Ask about a finding" className="min-w-0 flex-1 rounded-md border border-line px-3 py-2 text-sm outline-none focus:border-brand" />
               <button onClick={ask} className="rounded-md bg-brand p-2 text-white" aria-label="Send"><Send size={18} /></button>
             </div>
           </div>

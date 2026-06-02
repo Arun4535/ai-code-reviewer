@@ -33,7 +33,7 @@ function ReadonlyField({ label, value }: { label: string; value: string }) {
   return (
     <label className="text-sm font-medium">
       {label}
-      <input readOnly value={value} className="mt-2 w-full rounded-md border border-line bg-slate-50 px-3 py-2 text-slate-700" />
+      <input suppressHydrationWarning readOnly value={value} className="mt-2 w-full rounded-md border border-line bg-slate-50 px-3 py-2 text-slate-700" />
     </label>
   );
 }

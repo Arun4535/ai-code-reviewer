@@ -44,11 +44,11 @@ export function Dashboard() {
           <div className="grid gap-4">
             <label className="text-sm font-medium">
               Repository URL
-              <input value={repositoryUrl} onChange={(event) => setRepositoryUrl(event.target.value)} placeholder="https://github.com/owner/repo" className="mt-2 w-full rounded-md border border-line px-3 py-2 outline-none focus:border-brand" />
+              <input suppressHydrationWarning value={repositoryUrl} onChange={(event) => setRepositoryUrl(event.target.value)} placeholder="https://github.com/owner/repo" className="mt-2 w-full rounded-md border border-line px-3 py-2 outline-none focus:border-brand" />
             </label>
             <label className="text-sm font-medium">
               Pull Request URL
-              <input value={pullRequestUrl} onChange={(event) => setPullRequestUrl(event.target.value)} placeholder="https://github.com/owner/repo/pull/123" className="mt-2 w-full rounded-md border border-line px-3 py-2 outline-none focus:border-brand" />
+              <input suppressHydrationWarning value={pullRequestUrl} onChange={(event) => setPullRequestUrl(event.target.value)} placeholder="https://github.com/owner/repo/pull/123" className="mt-2 w-full rounded-md border border-line px-3 py-2 outline-none focus:border-brand" />
             </label>
             {error ? <div className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</div> : null}
             <button onClick={submit} disabled={loading || !repositoryUrl || !pullRequestUrl} className="inline-flex w-fit items-center gap-2 rounded-md bg-brand px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-50">
