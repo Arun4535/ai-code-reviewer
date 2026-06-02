@@ -51,8 +51,16 @@ class AnthropicChatModel:
             "anthropic-version": "2023-06-01",
             "content-type": "application/json",
         }
-        async with httpx.AsyncClient(timeout=60) as client:
-            resp = await client.post("https://api.anthropic.com/v1/messages", json=body, headers=headers)
+        try:
+            async with httpx.AsyncClient(timeout=settings.llm_request_timeout_seconds) as client:
+                resp = await client.post("https://api.anthropic.com/v1/messages", json=body, headers=headers)
+        except httpx.TimeoutException as exc:
+            raise ExternalServiceError(
+                f"Anthropic request timed out after {settings.llm_request_timeout_seconds:g} seconds. "
+                "Try again, reduce the PR size, or increase LLM_REQUEST_TIMEOUT_SECONDS."
+            ) from exc
+        except httpx.HTTPError as exc:
+            raise ExternalServiceError(f"Anthropic request failed before a response was received: {exc}") from exc
         if resp.status_code >= 400:
             raise ExternalServiceError(f"Anthropic request failed: {resp.status_code} {resp.text[:500]}")
 

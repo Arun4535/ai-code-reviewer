@@ -42,8 +42,16 @@ class GroqChatModel:
             "response_format": response_format,
         }
         headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
-        async with httpx.AsyncClient(timeout=60) as client:
-            resp = await client.post("https://api.groq.com/openai/v1/chat/completions", json=body, headers=headers)
+        try:
+            async with httpx.AsyncClient(timeout=settings.llm_request_timeout_seconds) as client:
+                resp = await client.post("https://api.groq.com/openai/v1/chat/completions", json=body, headers=headers)
+        except httpx.TimeoutException as exc:
+            raise ExternalServiceError(
+                f"Groq request timed out after {settings.llm_request_timeout_seconds:g} seconds. "
+                "Try again, reduce the PR size, or increase LLM_REQUEST_TIMEOUT_SECONDS."
+            ) from exc
+        except httpx.HTTPError as exc:
+            raise ExternalServiceError(f"Groq request failed before a response was received: {exc}") from exc
         if resp.status_code >= 400:
             raise ExternalServiceError(f"Groq request failed: {resp.status_code} {resp.text[:500]}")
         content = resp.json()["choices"][0]["message"]["content"]

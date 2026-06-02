@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     llm_provider: str = "groq"
     anthropic_api_key: str | None = None
     anthropic_model: str = "claude-sonnet-4-5"
+    llm_request_timeout_seconds: float = 180
     github_token: str | None = None
     cors_origins_raw: str = Field("http://localhost:3000", alias="CORS_ORIGINS")
     rate_limit_per_minute: int = 30
