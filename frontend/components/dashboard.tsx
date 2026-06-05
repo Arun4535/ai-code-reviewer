@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { GitPullRequest, Loader2, ShieldCheck, Zap } from "lucide-react";
 import { createReview } from "@/lib/api";
+import { ReviewWorkspace } from "@/components/review-workspace";
 
 export function Dashboard() {
   const router = useRouter();
@@ -69,6 +70,8 @@ export function Dashboard() {
           </div>
         </div>
       </section>
+
+      <ReviewWorkspace />
     </div>
   );
 }
