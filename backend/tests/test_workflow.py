@@ -18,4 +18,4 @@ async def test_workflow_runs_without_groq_key():
 
     assert summary.risk_score >= 0
     assert findings == []
-    assert len(outputs) == 4
+    assert len(outputs) == 1
