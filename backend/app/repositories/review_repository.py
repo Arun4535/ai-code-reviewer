@@ -58,6 +58,17 @@ class ReviewRepository:
         )
         return result.scalar_one_or_none()
 
+    async def list_reviews_for_repository(self, repository_full_name: str) -> list[Review]:
+        result = await self.db.execute(
+            select(Review)
+            .join(Review.pull_request)
+            .join(PullRequest.repository)
+            .options(selectinload(Review.findings), selectinload(Review.pull_request).selectinload(PullRequest.repository))
+            .where(Repository.full_name == repository_full_name)
+            .order_by(Review.created_at.desc())
+        )
+        return list(result.scalars().all())
+
     async def save_feedback(self, payload: FeedbackCreate) -> Feedback:
         feedback = Feedback(**payload.model_dump())
         self.db.add(feedback)
